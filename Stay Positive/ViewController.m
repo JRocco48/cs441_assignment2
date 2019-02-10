@@ -10,11 +10,50 @@
 
 @interface ViewController ()
 
+@property (retain, nonatomic) IBOutletCollection(UILabel) NSArray * labelArray;
+@property (strong, nonatomic) IBOutlet UIButton *testButton;
+
+@property (strong, nonatomic) IBOutlet UILabel *pos15;
+@property (strong, nonatomic) IBOutlet UILabel *pos14;
+@property (strong, nonatomic) IBOutlet UILabel *pos13;
+@property (strong, nonatomic) IBOutlet UILabel *pos12;
+@property (strong, nonatomic) IBOutlet UILabel *pos11;
+@property (strong, nonatomic) IBOutlet UILabel *pos10;
+@property (strong, nonatomic) IBOutlet UILabel *pos9;
+@property (strong, nonatomic) IBOutlet UILabel *pos8;
+@property (strong, nonatomic) IBOutlet UILabel *pos7;
+@property (strong, nonatomic) IBOutlet UILabel *pos6;
+@property (strong, nonatomic) IBOutlet UILabel *pos5;
+@property (strong, nonatomic) IBOutlet UILabel *pos4;
+@property (strong, nonatomic) IBOutlet UILabel *pos3;
+@property (strong, nonatomic) IBOutlet UILabel *pos2;
+@property (strong, nonatomic) IBOutlet UILabel *pos1;
+@property (strong, nonatomic) IBOutlet UILabel *pos0;
+
 @end
 
-NSInteger grid[16];
+long grid[16];
+UILabel * labelGrid[16];
 
 @implementation ViewController
+- (IBAction)testButton:(UIButton *)sender {
+    [self createBoard];
+    [self displayBoard];
+}
+
+- (void)createBoard {
+    for(int i = 0; i < 16; i++) grid[i] = 0;
+    grid[rand()%16] = ((rand() % 2)+1) * 2;
+    grid[rand()%16] = ((rand() % 2)+1) * -2;
+}
+
+- (void) displayBoard {
+    int i = 0;
+    for(UILabel * label in self.labelArray) {
+        label.text = [NSString stringWithFormat:@"%ld", grid[i]];
+        i++;
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -26,14 +65,5 @@ NSInteger grid[16];
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-- (void)createBoard {
-    for(int i = 0; i < 16; i++) grid[i] = 0;
-    int r = rand() % 16;
-    grid[rand()%16] = (rand() % 2) * 2;
-    grid[rand()%16] = (rand() % 2) * 2;
-
-}
-
 
 @end
