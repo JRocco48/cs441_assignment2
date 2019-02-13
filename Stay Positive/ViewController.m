@@ -32,7 +32,7 @@
 
 @end
 
-long grid[16];
+int grid[16];
 UILabel * labelGrid[16];
 
 @implementation ViewController
@@ -45,7 +45,11 @@ UILabel * labelGrid[16];
 - (void)displayBoard {
     int i = 0;
     for(UILabel * label in self.labelArray) {
-        label.text = [NSString stringWithFormat:@"%ld", grid[i]];
+        if(grid[i] != 0) {
+            label.text = [NSString stringWithFormat:@"%d", grid[i]];
+        } else {
+            label.text = @"";
+        }
         i++;
     }
 }
@@ -64,7 +68,7 @@ UILabel * labelGrid[16];
     grid[val] = posVneg;
 }
 
-- (void)moveLine:(long*) a b:(long*) b c:(long*) c d:(long*) d {
+- (void)moveLine:(int*) a b:(int*) b c:(int*) c d:(int*) d {
     
     //move line of numbers to fill in blank spots
     if((*c) == 0) {
@@ -84,14 +88,14 @@ UILabel * labelGrid[16];
     }
     
     //combine numbers that are adjacent and equal
-    if((*a) == (*b)) {
-        (*a) = (*a)*2;
+    if(abs(*a) == abs(*b)) {
+        (*a) += (*b);
         (*b) = 0;
-    } else if((*b) == (*c)) {
-        (*b) = (*b)*2;
+    }else if(abs(*b) == abs(*c)) {
+        (*b) += (*c);
         (*c) = 0;
-    } else if ((*c) == (*d)){
-        (*c) = (*c)*2;
+    } else if (abs(*c) == abs(*d)){
+        (*c) = (*d);
         (*d) = 0;
     }
 }
