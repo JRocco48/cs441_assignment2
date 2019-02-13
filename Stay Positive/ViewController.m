@@ -29,6 +29,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *pos2;
 @property (strong, nonatomic) IBOutlet UILabel *pos1;
 @property (strong, nonatomic) IBOutlet UILabel *pos0;
+@property (strong, nonatomic) IBOutlet UILabel *highscore;
 
 @end
 
@@ -44,14 +45,17 @@ UILabel * labelGrid[16];
 
 - (void)displayBoard {
     int i = 0;
+    int highest = 0;
     for(UILabel * label in self.labelArray) {
         if(grid[i] != 0) {
             label.text = [NSString stringWithFormat:@"%d", grid[i]];
+            if(grid[i] > highest) highest = grid[i];
         } else {
             label.text = @"";
         }
         i++;
     }
+    _highscore.text = [NSString stringWithFormat:@"%d", highest];
 }
 
 - (void)round {
@@ -95,9 +99,10 @@ UILabel * labelGrid[16];
         (*b) += (*c);
         (*c) = 0;
     } else if (abs(*c) == abs(*d)){
-        (*c) = (*d);
+        (*c) += (*d);
         (*d) = 0;
     }
+    
 }
 
 - (IBAction)swipeRight:(UISwipeGestureRecognizer *)sender {
